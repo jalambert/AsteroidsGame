@@ -55,14 +55,14 @@ public void draw() {
     acc += .00025;
   }
   if (ship.myXspeed > 0 && wPressed == false) {
-    ship.myXspeed -=.05;
+    ship.setMyXspeed(ship.getMyXspeed() -.05);
   } else if (ship.myXspeed < 0 && wPressed == false) {
-    ship.myXspeed += .05;
+    ship.setMyXspeed(ship.getMyXspeed() +.05);
   }
   if (ship.myYspeed > 0 && wPressed == false) {
-    ship.myYspeed -=.05;
+    ship.setMyYspeed(ship.getMyYspeed() -.05);
   } else if (ship.myYspeed < 0 && wPressed == false) {
-    ship.myYspeed += .05;
+    ship.setMyYspeed(ship.getMyYspeed() +.05);
   }
   System.out.println(sqrt(sq((float)ship.myXspeed)+sq((float)ship.myYspeed)));
 }
@@ -139,3 +139,4 @@ public void keyReleased() {
     dPressed = false;
   }
 }
+
