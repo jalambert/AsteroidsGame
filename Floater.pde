@@ -70,4 +70,16 @@ class Floater //Do NOT modify the Floater class! Make changes in the Spaceship c
     rotate(-1*dRadians);
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
   }
+  public void setMyXspeed(double n){
+    myXspeed = n;
+  }
+  public void setMyYspeed(double m){
+    myYspeed = m;
+  }
+  public double getMyXspeed(){
+    return myXspeed;
+  }
+  public double getMyYspeed(){
+    return myYspeed;
+  }
 } 
