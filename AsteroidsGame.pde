@@ -13,20 +13,23 @@ public void setup() {
 }
 double acc = 0; 
 double turn = 0; 
+boolean wPressed, aPressed, dPressed, sPressed;
 public void draw() {
-  background(0); 
-  if (keyPressed == true && key == 'w') {
+  background(0, 0, 0, 5); 
+  if (wPressed) {
     acc += .0005;
   }
-  if (keyPressed == true && key == 's') {
-    acc -= .0005;
+  if (sPressed) {
+    ((Spaceship)ship).hyperspace();
+    sPressed = false;
   }
-  if (keyPressed == true && key == 'a') {
+  if (aPressed) {
     turn -= .1;
   }
-  if (keyPressed == true && key == 'd') {
+  if (dPressed) {
     turn += .1;
   }
+
 
   for (int i = 0; i < dot.length; i ++) {
     dot[i].show();
@@ -51,27 +54,33 @@ public void draw() {
   } else if (acc < 0) {
     acc += .00025;
   }
-  if (keyPressed == true && key == 'e') {
-    acc = 0; 
-    ((Spaceship)ship).stopXspeed(); 
-    ((Spaceship)ship).stopYspeed();
+  if (ship.myXspeed > 0 && wPressed == false) {
+    ship.myXspeed -=.05;
+  } else if (ship.myXspeed < 0 && wPressed == false) {
+    ship.myXspeed += .05;
   }
+  if (ship.myYspeed > 0 && wPressed == false) {
+    ship.myYspeed -=.05;
+  } else if (ship.myYspeed < 0 && wPressed == false) {
+    ship.myYspeed += .05;
+  }
+  System.out.println(sqrt(sq((float)ship.myXspeed)+sq((float)ship.myYspeed)));
 }
 
 class Asteroid extends Floater {
-  double turning; 
-  float scale; 
+  protected double turning; 
+  protected float scale; 
   Asteroid() {
     turning = Math.random()*2-1;
     scale = (float)(Math.random()*2)+1; 
     corners = 7; 
     xCorners = new int[]{-4, 1, 7, 8, 3, -1, -5}; 
     yCorners = new int[]{-4, -7, -3, 2, 4, 6, 3}; 
-    myColor = color((int)(Math.random()*20)+180, (int)(Math.random()*20)+180, (int)(Math.random()*20)+180); 
+    myColor = color((int)(Math.random()*60)+100); 
     myCenterX = Math.random()*800; 
     myCenterY = Math.random()*800; 
-    myXspeed = Math.random()*8;; 
-    myYspeed = 0; 
+    myXspeed = 0;
+    myYspeed = 0;
     myPointDirection = 0;
   }
   public void show ()  //Draws the floater at the current position  
@@ -99,5 +108,34 @@ class Asteroid extends Floater {
     //"unrotate" and "untranslate" in reverse order
     rotate(-1*dRadians); 
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
+  }
+}
+
+void keyPressed() {
+  if (key == 'w') {
+    wPressed = true;
+  }
+  if (key == 's') {
+    sPressed = true;
+  }
+  if (key == 'a') {
+    aPressed = true;
+  }
+  if (key == 'd') {
+    dPressed = true;
+  }
+}
+public void keyReleased() {
+  if (key == 'w') {
+    wPressed = false;
+  }
+  if (key == 's') {
+    sPressed = false;
+  } 
+  if (key == 'a') {
+    aPressed = false;
+  }
+  if (key == 'd') {
+    dPressed = false;
   }
 }
