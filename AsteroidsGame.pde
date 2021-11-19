@@ -64,7 +64,6 @@ public void draw() {
   } else if (ship.myYspeed < 0 && wPressed == false) {
     ship.setMyYspeed(ship.getMyYspeed() +.05);
   }
-  System.out.println(sqrt(sq((float)ship.myXspeed)+sq((float)ship.myYspeed)));
 }
 
 class Asteroid extends Floater {
