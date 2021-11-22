@@ -15,7 +15,7 @@ double acc = 0;
 double turn = 0; 
 boolean wPressed, aPressed, dPressed, sPressed;
 public void draw() {
-  background(0, 0, 0, 5); 
+  background(0, 0, 0); 
   if (wPressed) {
     acc += .0005;
   }
