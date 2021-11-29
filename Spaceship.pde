@@ -1,8 +1,8 @@
 class Spaceship extends Floater {   
   Spaceship() {
-    corners = 6;
-    xCorners = new int[]{-8, 16, -8, -2, -8, 16};
-    yCorners = new int[]{-8, 0, 8, 0, -8, 0};
+    corners = 4;
+    xCorners = new int[]{-8, 16, -8, -2};
+    yCorners = new int[]{-8, 0, 8, 0};
     myColor = color(255);
     myCenterX = 400;
     myCenterY = 400;
@@ -10,10 +10,10 @@ class Spaceship extends Floater {
     myYspeed = 0;
     myPointDirection = 0;
   }
-  void stopXspeed(){
+  void hyperspace() {
     myXspeed = 0;
-  }
-  void stopYspeed(){
     myYspeed = 0;
+    myCenterX = Math.random()*800;
+    myCenterY = Math.random()*800;
   }
 }
