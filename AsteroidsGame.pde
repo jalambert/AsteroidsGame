@@ -1,14 +1,18 @@
 Spaceship ship = new Spaceship();
-Asteroid[] rock = new Asteroid[25];
+Asteroid rock = new Asteroid();
+ArrayList <Asteroid> rockList;
+
 Star[] dot = new Star[300];
 public void setup() {
   background(0);
   size(800, 800);
+  rockList = new ArrayList <Asteroid>();
+
+  for (int k = 0; k < 25; k++) {
+    rockList.add(new Asteroid());
+  }
   for (int i = 0; i < dot.length; i ++) {
     dot[i] = new Star();
-  }
-  for (int j = 0; j < rock.length; j ++) {
-    rock[j] = new Asteroid();
   }
 }
 double acc = 0; 
@@ -16,6 +20,12 @@ double turn = 0;
 boolean wPressed, aPressed, dPressed, sPressed;
 public void draw() {
   background(0, 0, 0); 
+  for (int i = 0; i < rockList.size(); i++) {
+    float close = dist((float)ship.getMyCenterX(), (float)ship.getMyCenterY(), (float)rockList.get(i).getMyCenterX(), (float)rockList.get(i).getMyCenterY());
+    if (close < 10*rockList.get(i).getScale()) {
+      rockList.remove(i);
+    }
+  }
   if (wPressed) {
     acc += .0005;
   }
@@ -34,11 +44,12 @@ public void draw() {
   for (int i = 0; i < dot.length; i ++) {
     dot[i].show();
   }
-  for (int j = 0; j < rock.length; j ++) {
-    rock[j].show();
-    rock[j].turn(rock[j].turning);
-    rock[j].move();
+  for (int j = 0; j < rockList.size(); j ++) {
+    rockList.get(j).show();
+    rockList.get(j).turn(rockList.get(j).turning);
+    rockList.get(j).move();
   }
+  
   ship.accelerate(acc); 
   ship.turn(turn); 
   ship.move(); 
@@ -49,68 +60,28 @@ public void draw() {
   } else if (turn < 0) {
     turn += .05;
   }
-  if (acc > 0) {
+  if (acc < .0005 && acc >- .0005) {
+    acc = 0;
+    ship.setMyXspeed(0);
+    ship.setMyYspeed(0);
+  } else if (acc > 0) {
     acc -=.00025;
   } else if (acc < 0) {
-    acc += .00025;
+    acc += .0025;
   }
-  if (ship.myXspeed > 0 && wPressed == false) {
+  if (ship.getMyXspeed() > 0 && wPressed == false) {
     ship.setMyXspeed(ship.getMyXspeed() -.05);
-  } else if (ship.myXspeed < 0 && wPressed == false) {
+  } else if (ship.getMyXspeed() < 0 && wPressed == false) {
     ship.setMyXspeed(ship.getMyXspeed() +.05);
   }
-  if (ship.myYspeed > 0 && wPressed == false) {
+  if (ship.getMyYspeed() > 0 && wPressed == false) {
     ship.setMyYspeed(ship.getMyYspeed() -.05);
-  } else if (ship.myYspeed < 0 && wPressed == false) {
+  } else if (ship.getMyYspeed() < 0 && wPressed == false) {
     ship.setMyYspeed(ship.getMyYspeed() +.05);
   }
 }
 
-class Asteroid extends Floater {
-  protected double turning; 
-  protected float scale; 
-  Asteroid() {
-    turning = Math.random()*2-1;
-    scale = (float)(Math.random()*2)+1; 
-    corners = 7; 
-    xCorners = new int[]{-4, 1, 7, 8, 3, -1, -5}; 
-    yCorners = new int[]{-4, -7, -3, 2, 4, 6, 3}; 
-    myColor = color((int)(Math.random()*60)+100); 
-    myCenterX = Math.random()*800; 
-    myCenterY = Math.random()*800; 
-    myXspeed = 0;
-    myYspeed = 0;
-    myPointDirection = 0;
-  }
-  public void show ()  //Draws the floater at the current position  
-  {             
-    fill(myColor); 
-    stroke(40); 
-
-    //translate the (x,y) center of the ship to the correct position
-    translate((float)myCenterX, (float)myCenterY); 
-
-    //convert degrees to radians for rotate()     
-    float dRadians = (float)(myPointDirection*(Math.PI/180)); 
-
-    //rotate so that the polygon will be drawn in the correct direction
-    rotate(dRadians); 
-
-    //draw the polygon
-    beginShape(); 
-    for (int nI = 0; nI < corners; nI++)
-    {
-      vertex(xCorners[nI]*scale, yCorners[nI]*scale);
-    }
-    endShape(CLOSE); 
-
-    //"unrotate" and "untranslate" in reverse order
-    rotate(-1*dRadians); 
-    translate(-1*(float)myCenterX, -1*(float)myCenterY);
-  }
-}
-
-void keyPressed() {
+public void keyPressed() {
   if (key == 'w') {
     wPressed = true;
   }
@@ -138,4 +109,3 @@ public void keyReleased() {
     dPressed = false;
   }
 }
-
