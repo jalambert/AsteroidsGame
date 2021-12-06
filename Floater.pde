@@ -29,26 +29,27 @@ class Floater //Do NOT modify the Floater class! Make changes in the Spaceship c
     myCenterY += myYspeed;     
 
     //wrap around screen    
-    if (myCenterX >width)
+    if (myCenterX >width+20)
     {     
-      myCenterX = 0;
-    } else if (myCenterX<0)
+      myCenterX = -19;
+    } else if (myCenterX<0-20)
     {     
-      myCenterX = width;
+      myCenterX = width+19;
     }    
-    if (myCenterY >height)
+    if (myCenterY >height+20)
     {    
-      myCenterY = 0;
-    } else if (myCenterY < 0)
+      myCenterY = 0-19;
+    } else if (myCenterY < 0-20)
     {     
-      myCenterY = height;
+      myCenterY = height+19;
     }
   }   
   public void show ()  //Draws the floater at the current position  
   {             
-    fill(myColor);   
-    stroke(100);    
-    strokeWeight(3);
+    fill(myColor); 
+    noFill();
+    stroke(100,150,255);    
+    strokeWeight(2);
 
     //translate the (x,y) center of the ship to the correct position
     translate((float)myCenterX, (float)myCenterY);
@@ -82,5 +83,8 @@ class Floater //Do NOT modify the Floater class! Make changes in the Spaceship c
   }
   public double getMyYspeed(){
     return myYspeed;
+  }
+  public float getdRadians(){
+    return (float)(myPointDirection*(Math.PI/180));
   }
 } 
