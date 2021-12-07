@@ -1,53 +1,56 @@
-class Asteroid extends Floater {
-  protected double turning; 
-  protected float scale; 
-  Asteroid() {
-    turning = Math.random()*2-1;
-    scale = (float)(Math.random()*2)+1; 
-    corners = 7; 
-    xCorners = new int[]{(int)(Math.random()*4)-6, (int)(Math.random()*4)-1, (int)(Math.random()*4)+3, (int)(Math.random()*4)+5, (int)(Math.random()*4), (int)(Math.random()*4)-2, (int)(Math.random()*4)-7}; 
-    yCorners = new int[]{(int)(Math.random()*4)-6, (int)(Math.random()*4)-10, (int)(Math.random()*4)-5, (int)(Math.random()*4), (int)(Math.random()*4)+2, (int)(Math.random()*4)+4, (int)(Math.random()*4)+2}; 
-    myColor = color((int)(Math.random()*60)+100); 
-    myCenterX = Math.random()*800; 
-    myCenterY = Math.random()*800; 
-    myXspeed = (Math.random()*3)-1;
-    myYspeed = (Math.random()*3)-1;
-    myPointDirection = 0;
+class bullet extends Floater {
+  bullet() {
+    double dRadians = myPointDirection * (Math.PI/180);
+    corners = 5; 
+    xCorners = new int[]{-3, 0, 3, 0, -3}; 
+    yCorners = new int[]{0, -1, 0, 1, 0}; 
+    myColor = color(255); 
+    myCenterX = ship.getMyCenterX(); 
+    myCenterY = ship.getMyCenterY(); 
+    myXspeed = 5 * Math.cos(dRadians);
+    myYspeed = 5 * Math.sin(dRadians);
+    myPointDirection = ship.getMyPointDirection();
+  }
+  public void move(int i) {
+    //change the x and y coordinates by myXspeed and myYspeed       
+    myCenterX += myXspeed;    
+    myCenterY += myYspeed;     
+
+    //wrap around screen    
+    if (myCenterX >width)
+    {     
+      magazine.remove(i);
+    } else if (myCenterX<0)
+    {     
+      magazine.remove(i);
+    }    
+    if (myCenterY >height)
+    {    
+      magazine.remove(i);
+    } else if (myCenterY < 0)
+    {     
+      magazine.remove(i);
+    }
   }
   public void show ()  //Draws the floater at the current position  
   {             
     fill(myColor); 
-    noFill();
-    stroke(40); 
+    stroke(255);
 
     //translate the (x,y) center of the ship to the correct position
-    translate((float)myCenterX, (float)myCenterY); 
+    translate((float)myCenterX, (float)myCenterY);
 
     //convert degrees to radians for rotate()     
-    float dRadians = (float)(myPointDirection*(Math.PI/180)); 
+    float dRadians = (float)(myPointDirection*(Math.PI/180));
 
     //rotate so that the polygon will be drawn in the correct direction
-    rotate(dRadians); 
+    rotate(dRadians);
 
     //draw the polygon
-    beginShape(); 
-    for (int nI = 0; nI < corners; nI++)
-    {
-      vertex(xCorners[nI]*scale, yCorners[nI]*scale);
-    }
-    endShape(CLOSE); 
+    ellipse((float)ship.getMyCenterX(),(float)ship.getMyCenterY(),2,2);
 
     //"unrotate" and "untranslate" in reverse order
-    rotate(-1*dRadians); 
+    rotate(-1*dRadians);
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
-  }
-  public double getMyCenterX() {
-    return myCenterX;
-  }
-  public double getMyCenterY() {
-    return myCenterY;
-  }
-  public float getScale() {
-    return scale;
   }
 }
