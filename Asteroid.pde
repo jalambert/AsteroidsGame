@@ -41,13 +41,13 @@ class Asteroid extends Floater {
     rotate(-1*dRadians); 
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
   }
-  public double getMyCenterX(){
+  public double getMyCenterX() {
     return myCenterX;
   }
-  public double getMyCenterY(){
+  public double getMyCenterY() {
     return myCenterY;
   }
-  public float getScale(){
+  public float getScale() {
     return scale;
   }
 }
