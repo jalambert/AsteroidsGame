@@ -1,13 +1,14 @@
 Spaceship ship = new Spaceship();
 Asteroid rock = new Asteroid();
 ArrayList <Asteroid> rockList;
+ArrayList <bullet> magazine;
 
 Star[] dot = new Star[300];
 public void setup() {
   background(0);
   size(800, 800);
   rockList = new ArrayList <Asteroid>();
-
+  magazine = new ArrayList <bullet>();
   for (int k = 0; k < 25; k++) {
     rockList.add(new Asteroid());
   }
@@ -17,20 +18,34 @@ public void setup() {
 }
 double acc = 0; 
 double turn = 0; 
-boolean wPressed, aPressed, dPressed, sPressed;
+boolean wPressed, aPressed, dPressed, sPressed, spacePressed;
 public void draw() {
   background(0, 0, 0); 
+  ship.accelerate(acc); 
+  ship.turn(turn); 
+  ship.move(); 
+  ship.show(); 
+  /*for (int j = 0; j < magazine.size(); j ++) {
+    magazine.get(j).show();
+    magazine.get(j).turn(turn);
+    magazine.get(j).move(j);
+  }*/
   for (int i = 0; i < rockList.size(); i++) {
     float close = dist((float)ship.getMyCenterX(), (float)ship.getMyCenterY(), (float)rockList.get(i).getMyCenterX(), (float)rockList.get(i).getMyCenterY());
     if (close < 10*rockList.get(i).getScale()) {
       rockList.remove(i);
     }
   }
+  
+  
+  
   if (wPressed) {
     acc += .0005;
   }
   if (sPressed) {
     ((Spaceship)ship).hyperspace();
+    acc = 0;
+    turn = 0;
     sPressed = false;
   }
   if (aPressed) {
@@ -38,6 +53,9 @@ public void draw() {
   }
   if (dPressed) {
     turn += .1;
+  }
+  if (spacePressed) {
+    magazine.add(new bullet());
   }
 
 
@@ -49,11 +67,8 @@ public void draw() {
     rockList.get(j).turn(rockList.get(j).turning);
     rockList.get(j).move();
   }
+
   
-  ship.accelerate(acc); 
-  ship.turn(turn); 
-  ship.move(); 
-  ship.show(); 
 
   if (turn > 0) {
     turn -=.05;
@@ -94,6 +109,9 @@ public void keyPressed() {
   if (key == 'd') {
     dPressed = true;
   }
+  if (key == ' ') {
+    spacePressed = true;
+  }
 }
 public void keyReleased() {
   if (key == 'w') {
@@ -107,5 +125,8 @@ public void keyReleased() {
   }
   if (key == 'd') {
     dPressed = false;
+  }
+  if (key == ' ') {
+    spacePressed = false;
   }
 }
