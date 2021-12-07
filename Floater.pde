@@ -43,12 +43,12 @@ class Floater //Do NOT modify the Floater class! Make changes in the Spaceship c
     {     
       myCenterY = height+19;
     }
-  }   
+  }          
   public void show ()  //Draws the floater at the current position  
   {             
     fill(myColor); 
     noFill();
-    stroke(100,150,255);    
+    stroke(100, 150, 255);    
     strokeWeight(2);
 
     //translate the (x,y) center of the ship to the correct position
@@ -72,19 +72,19 @@ class Floater //Do NOT modify the Floater class! Make changes in the Spaceship c
     rotate(-1*dRadians);
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
   }
-  public void setMyXspeed(double n){
+  public void setMyXspeed(double n) {
     myXspeed = n;
   }
-  public void setMyYspeed(double m){
+  public void setMyYspeed(double m) {
     myYspeed = m;
   }
-  public double getMyXspeed(){
+  public double getMyXspeed() {
     return myXspeed;
   }
-  public double getMyYspeed(){
+  public double getMyYspeed() {
     return myYspeed;
   }
-  public float getdRadians(){
+  public float getdRadians() {
     return (float)(myPointDirection*(Math.PI/180));
   }
-} 
+}
